@@ -4,7 +4,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GOALS.Application
+namespace GOALS.GlobalManagers
 {
     public class PhotonManager : MonoBehaviourPunCallbacks
     {
