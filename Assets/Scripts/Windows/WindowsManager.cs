@@ -9,16 +9,52 @@ namespace GOALS.Windows
 {
     public class WindowsManager : AutoLocatorComponent
     {
+        public Action<WindowsTemplate> OnShowWindow;
+        public Action<WindowsTemplate, bool> OnCloseWindow;
+
         [SerializeField]
         private List<WindowsLayer> _editorLayers = new List<WindowsLayer>();
 
         private Dictionary<EnumWindowLayer, Transform> _runtimeLayers = new Dictionary<EnumWindowLayer, Transform>();
+        private List<WindowsTemplate> _windows = new List<WindowsTemplate>();
+
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                GetLastWindow()?.OnClickEsc();
+        }
+
+
+        public T ShowWindow<T>(string pathPrefab, EnumWindowLayer windowLayer, object data = null, bool includeInWindowsList = true) where T : WindowsTemplate
+        {
+            var prefab = Resources.Load<GameObject>(string.Format(pathPrefab));
+            var layer = _runtimeLayers.ContainsKey(windowLayer) ? _runtimeLayers[windowLayer] : transform;
+            var window = Instantiate(prefab, layer).GetComponent<T>();
+
+            window.OnClose += OnCloseHandler;
+            window.Initialize(data);
+
+            if (includeInWindowsList)
+                _windows.Add(window);
+
+            OnShowWindow?.Invoke(window);
+
+            return window;
+        }
+
+        public WindowsTemplate GetLastWindow()
+        {
+            if (_windows.Count < 1)
+                return null;
+
+            return _windows[_windows.Count - 1];
+        }
 
 
         protected override void CustomAwake()
         {
             base.CustomAwake();
-
             DoCacheLayers(_editorLayers);
         }
 
@@ -31,8 +67,19 @@ namespace GOALS.Windows
                     _runtimeLayers.Add(layer.key, layer.value);
         }
 
+        private void OnCloseHandler(WindowsTemplate window, bool result)
+        {
+            window.OnClose -= OnCloseHandler;
+
+            if (_windows.Contains(window))
+                _windows.Remove(window);
+
+            OnCloseWindow?.Invoke(window, result);
+        }
+
 
 #if UNITY_EDITOR
+        #region EditorOnly
         [ContextMenu("Create NA Layer Object")]
         private void CreateNewNALayerObject()
         {
@@ -105,6 +152,7 @@ namespace GOALS.Windows
         {
             _editorLayers.Add(layer);
         }
+        #endregion
 #endif
     }
 }
