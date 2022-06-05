@@ -9,14 +9,14 @@ namespace GOALS.Windows
 {
     public class WindowsManager : AutoLocatorComponent
     {
-        public Action<WindowsTemplate> OnShowWindow;
-        public Action<WindowsTemplate, bool> OnCloseWindow;
+        public Action<WindowTemplate> OnShowWindow;
+        public Action<WindowTemplate, bool> OnCloseWindow;
 
         [SerializeField]
         private List<WindowsLayer> _editorLayers = new List<WindowsLayer>();
 
         private Dictionary<EnumWindowLayer, Transform> _runtimeLayers = new Dictionary<EnumWindowLayer, Transform>();
-        private List<WindowsTemplate> _windows = new List<WindowsTemplate>();
+        private List<WindowTemplate> _windows = new List<WindowTemplate>();
 
 
         private void Update()
@@ -26,7 +26,7 @@ namespace GOALS.Windows
         }
 
 
-        public T ShowWindow<T>(string pathPrefab, EnumWindowLayer windowLayer, object data = null, bool includeInWindowsList = true) where T : WindowsTemplate
+        public T ShowWindow<T>(string pathPrefab, EnumWindowLayer windowLayer, object data = null, bool includeInWindowsList = true) where T : WindowTemplate
         {
             var prefab = Resources.Load<GameObject>(string.Format(pathPrefab));
             var layer = _runtimeLayers.ContainsKey(windowLayer) ? _runtimeLayers[windowLayer] : transform;
@@ -43,7 +43,7 @@ namespace GOALS.Windows
             return window;
         }
 
-        public WindowsTemplate GetLastWindow()
+        public WindowTemplate GetLastWindow()
         {
             if (_windows.Count < 1)
                 return null;
@@ -67,7 +67,7 @@ namespace GOALS.Windows
                     _runtimeLayers.Add(layer.key, layer.value);
         }
 
-        private void OnCloseHandler(WindowsTemplate window, bool result)
+        private void OnCloseHandler(WindowTemplate window, bool result)
         {
             window.OnClose -= OnCloseHandler;
 

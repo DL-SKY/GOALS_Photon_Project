@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace GOALS.Windows
 {
-    public abstract class WindowsTemplate : MonoBehaviour
+    public abstract class WindowTemplate : MonoBehaviour
     {
         public event Action OnInitialize;
-        public event Action<WindowsTemplate, bool> OnClose;
+        public event Action<WindowTemplate, bool> OnClose;
+
+        public static string PathPrefab = "";
 
         [Header("Main Settings")]
         [SerializeField] protected bool _canUseEsc;
