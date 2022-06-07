@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,21 +10,21 @@ namespace GOALS.GlobalManagers
 {
     public class PhotonCallbacks : MonoBehaviourPunCallbacks
     {
-        public UnityEvent EventOnConnectedToMaster;
-        public UnityEvent<DisconnectCause> EventOnDisconnected;
+        public Action EventOnConnectedToMaster;
+        public Action<DisconnectCause> EventOnDisconnected;
 
-        public UnityEvent EventOnJoinedLobby;
-        public UnityEvent EventOnLeftLobby;
+        public Action EventOnJoinedLobby;
+        public Action EventOnLeftLobby;
 
-        public UnityEvent EventOnCreatedRoom;
-        public UnityEvent<short, string> EventOnCreateRoomFailed;
-        public UnityEvent EventOnJoinedRoom;
-        public UnityEvent<short, string> EventOnJoinRoomFailed;
-        public UnityEvent EventOnLeftRoom;
-        public UnityEvent<Player> EventOnPlayerEnteredRoom;
-        public UnityEvent<Player> EventOnPlayerLeftRoom;
-        public UnityEvent<List<RoomInfo>> EventOnRoomListUpdate;
-        public UnityEvent<Hashtable> EventOnRoomPropertiesUpdate;
+        public Action EventOnCreatedRoom;
+        public Action<short, string> EventOnCreateRoomFailed;
+        public Action EventOnJoinedRoom;
+        public Action<short, string> EventOnJoinRoomFailed;
+        public Action EventOnLeftRoom;
+        public Action<Player> EventOnPlayerEnteredRoom;
+        public Action<Player> EventOnPlayerLeftRoom;
+        public Action<List<RoomInfo>> EventOnRoomListUpdate;
+        public Action<Hashtable> EventOnRoomPropertiesUpdate;
 
 
         public override void OnConnectedToMaster()

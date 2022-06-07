@@ -10,6 +10,8 @@ namespace GOALS.GlobalManagers
         private WindowsManager _windowsManager;
 
 
+
+
         private void Start()
         {
             _windowsManager = ComponentLocator.Resolve<WindowsManager>();
