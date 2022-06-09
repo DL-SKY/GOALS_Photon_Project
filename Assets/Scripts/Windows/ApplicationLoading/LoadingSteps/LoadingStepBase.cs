@@ -11,10 +11,10 @@ namespace GOALS.Windows.ApplicationLoading.LoadingSteps
         public EnumLoadingStep completeNextStep { get; private set; }
         public EnumLoadingStep failedNextStep { get; private set; }
 
-        public Action<LoadingStepBase> OnStart;
-        public Action<LoadingStepBase, float> OnChangeProgress;
-        public Action<LoadingStepBase> OnComplete;
-        public Action<LoadingStepBase, string> OnFailed;
+        public event Action<LoadingStepBase> OnStart;
+        public event Action<LoadingStepBase, float> OnChangeProgress;
+        public event Action<LoadingStepBase> OnComplete;
+        public event Action<LoadingStepBase, string> OnFailed;
 
         protected float _progress;        
 
@@ -28,8 +28,10 @@ namespace GOALS.Windows.ApplicationLoading.LoadingSteps
 
         public void Start()
         {
+            Debug.LogError($"Start {this.GetType()}");
+
             OnStart?.Invoke(this);
-            CustomStart();
+            CustomStart();            
         }
 
         public float GetProgress()
@@ -51,20 +53,22 @@ namespace GOALS.Windows.ApplicationLoading.LoadingSteps
 
         protected void Complete()
         {
+            Debug.LogError($"Complete {this.GetType()}");
+
             OnChangeProgress?.Invoke(this, 1.0f);
 
             CustomComplete();
-            OnComplete?.Invoke(this);
-
-            Debug.LogError($"Complete {this.GetType()}");
+            OnComplete?.Invoke(this);            
         }
 
         protected void Failed(string error)
         {
-            CustomFailed(error);
-            OnFailed?.Invoke(this, error);
-
             Debug.LogError($"Failed {this.GetType()} by {error}");
+
+            OnChangeProgress?.Invoke(this, 1.0f);
+
+            CustomFailed(error);
+            OnFailed?.Invoke(this, error);            
         }
 
 

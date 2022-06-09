@@ -9,7 +9,11 @@ namespace GOALS.Windows.ApplicationLoading
     {
         public static new string PathPrefab = "Windows/Loading/ApplicationLoadingWindow";
 
+        private const EnumLoadingStep FIRST_LOADING_STEP = EnumLoadingStep.InitializeUnityService;
+        private const EnumLoadingStep LAST_LOADING_STEP = EnumLoadingStep.LastStep;
+
         private Dictionary<EnumLoadingStep, LoadingStepBase> _steps;
+        private float _maxProgress;
 
 
         public override void Initialize(object data)
@@ -19,7 +23,7 @@ namespace GOALS.Windows.ApplicationLoading
             _steps = CreateLoadingSteps();
 
             Subscribe();
-            StartLoading(EnumLoadingStep.InitializeUnityService);
+            StartLoadingStep(FIRST_LOADING_STEP);
         }
 
 
@@ -31,19 +35,32 @@ namespace GOALS.Windows.ApplicationLoading
 
         private Dictionary<EnumLoadingStep, LoadingStepBase> CreateLoadingSteps()
         {
+            _maxProgress = 5.0f;
+
             return new Dictionary<EnumLoadingStep, LoadingStepBase>
             {
-                { EnumLoadingStep.InitializeUnityService, new InitializeUnityServiceStep(EnumLoadingStep.NA, EnumLoadingStep.NA)},
+                { EnumLoadingStep.InitializeUnityService, new InitializeUnityServiceStep(EnumLoadingStep.LoadRemoteConfig, EnumLoadingStep.LoadLocalConfig) },
+                { EnumLoadingStep.LoadRemoteConfig, new LoadRemoteConfigStep(EnumLoadingStep.ApplyRemoteConfig, EnumLoadingStep.ApplyLocalConfig) },
+                { EnumLoadingStep.ApplyRemoteConfig, new ApplyRemoteConfigStep(EnumLoadingStep.PhotonConnect, EnumLoadingStep.LastStep) },
+                { EnumLoadingStep.PhotonConnect, new PhotonConnectStep(EnumLoadingStep.LastStep, EnumLoadingStep.LastStep)},
+
                 //...
+
+                { EnumLoadingStep.LastStep, new LastStep(EnumLoadingStep.NA, EnumLoadingStep.NA)},
             };
         }
 
-        private void StartLoading(EnumLoadingStep stepType)
+        private void StartLoadingStep(EnumLoadingStep stepType)
         {
             if (_steps.ContainsKey(stepType))
                 _steps[stepType].Start();
             else
-                Debug.LogError($"[ApplicationLoadingWindow]Not found step with type {stepType}");
+                Debug.LogError($"[ApplicationLoadingWindow] Not found step with type {stepType}");
+        }
+
+        private bool CheckLastStep(EnumLoadingStep stepType)
+        {
+            return stepType == LAST_LOADING_STEP;
         }
 
         private void Subscribe()
@@ -74,55 +91,24 @@ namespace GOALS.Windows.ApplicationLoading
         }
 
         private void OnChangeProgressHandler(LoadingStepBase step, float progress)
-        { 
-        
+        {
+            Debug.LogError($"[ApplicationLoadingWindow] OnChangeProgressHandler {step.GetType()}, progress {progress}");
         }
 
         private void OnCompleteHandler(LoadingStepBase step)
-        { 
-        
+        {
+            if (CheckLastStep(step.Step))
+                ;
+            else
+                StartLoadingStep(step.completeNextStep);
         }
 
         private void OnFailedHandler(LoadingStepBase step, string error)
-        { 
-        
-        }
-
-
-
-
-
-
-        /*
-        public struct userAttributes { };
-        public struct appAttributes { };
-
-
-        async private void Start()
         {
-            //ConfigManager.SetEnvironmentID("test");
-            //https://docs.unity3d.com/Packages/com.unity.remote-config@3.1/manual/CodeIntegration.html
-
-            Debug.LogError("time0 " + Time.time);
-
-            if (Utilities.CheckForInternetConnection())
-            {
-                await UnityServices.InitializeAsync();
-            }
-
-            RemoteConfigService.Instance.SetEnvironmentID("46d321da-5a26-4ccb-8f65-fa182534bc1b");  //5179be91-7d01-4123-99d4-4ccf784333d6
-            Debug.LogError("time1 " + Time.time);
-            //RemoteConfigService.Instance.FetchConfigs(new userAttributes(), new appAttributes());
-            RemoteConfigService.Instance.FetchCompleted += FetchCompletedHandler;
-            Debug.LogError("time2 " + Time.time);
+            if (CheckLastStep(step.Step))
+                ;
+            else
+                StartLoadingStep(step.failedNextStep);
         }
-
-
-        private void FetchCompletedHandler(ConfigResponse config)
-        {
-            Debug.LogError("time3 " + Time.time);
-            Debug.LogError("RemoteInt : " + RemoteConfigService.Instance.appConfig.GetInt("RemoteInt"));
-        }
-        */
     }
 }

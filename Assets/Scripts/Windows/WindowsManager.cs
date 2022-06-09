@@ -9,11 +9,10 @@ namespace GOALS.Windows
 {
     public class WindowsManager : AutoLocatorComponent
     {
-        public Action<WindowTemplate> OnShowWindow;
-        public Action<WindowTemplate, bool> OnCloseWindow;
+        public event Action<WindowTemplate> OnShowWindow;
+        public event Action<WindowTemplate, bool> OnCloseWindow;
 
-        [SerializeField]
-        private List<WindowsLayer> _editorLayers = new List<WindowsLayer>();
+        [SerializeField] private List<WindowsLayer> _editorLayers = new List<WindowsLayer>();
 
         private Dictionary<EnumWindowLayer, Transform> _runtimeLayers = new Dictionary<EnumWindowLayer, Transform>();
         private List<WindowTemplate> _windows = new List<WindowTemplate>();

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"61977fc3-d765-4811-a0c0-d030c0d91ad3\"\r\n   
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"54c2a12c-b8af-45e5-b0f4-d3d5d725c8b9\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RemoteInt\",\r\n      \"type\": \"int\",\r\n     
     \"value\": 55\r\n    }\r\n  }\r\n]"
-  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"61977fc3-d765-4811-a0c0-d030c0d91ad3\"\r\n   
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"54c2a12c-b8af-45e5-b0f4-d3d5d725c8b9\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RemoteInt\",\r\n      \"type\": \"int\",\r\n     
     \"value\": 55\r\n    }\r\n  }\r\n]"
   _environments: "[\r\n  {\r\n    \"projectId\": \"0c5721cb-4133-405e-9bce-3592cd767df8\",\r\n   

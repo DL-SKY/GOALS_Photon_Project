@@ -10,21 +10,21 @@ namespace GOALS.GlobalManagers
 {
     public class PhotonCallbacks : MonoBehaviourPunCallbacks
     {
-        public Action EventOnConnectedToMaster;
-        public Action<DisconnectCause> EventOnDisconnected;
+        public event Action EventOnConnectedToMaster;
+        public event Action<DisconnectCause> EventOnDisconnected;
 
-        public Action EventOnJoinedLobby;
-        public Action EventOnLeftLobby;
+        public event Action EventOnJoinedLobby;
+        public event Action EventOnLeftLobby;
 
-        public Action EventOnCreatedRoom;
-        public Action<short, string> EventOnCreateRoomFailed;
-        public Action EventOnJoinedRoom;
-        public Action<short, string> EventOnJoinRoomFailed;
-        public Action EventOnLeftRoom;
-        public Action<Player> EventOnPlayerEnteredRoom;
-        public Action<Player> EventOnPlayerLeftRoom;
-        public Action<List<RoomInfo>> EventOnRoomListUpdate;
-        public Action<Hashtable> EventOnRoomPropertiesUpdate;
+        public event Action EventOnCreatedRoom;
+        public event Action<short, string> EventOnCreateRoomFailed;
+        public event Action EventOnJoinedRoom;
+        public event Action<short, string> EventOnJoinRoomFailed;
+        public event Action EventOnLeftRoom;
+        public event Action<Player> EventOnPlayerEnteredRoom;
+        public event Action<Player> EventOnPlayerLeftRoom;
+        public event Action<List<RoomInfo>> EventOnRoomListUpdate;
+        public event Action<Hashtable> EventOnRoomPropertiesUpdate;
 
 
         public override void OnConnectedToMaster()

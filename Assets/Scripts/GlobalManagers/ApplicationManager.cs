@@ -1,15 +1,17 @@
 ﻿using DllSky.Components.Services;
 using DllSky.Services;
+using GOALS.ScriptableObjects.Application;
 using GOALS.Windows;
 using GOALS.Windows.ApplicationLoading;
+using UnityEngine;
 
 namespace GOALS.GlobalManagers
 {
     public class ApplicationManager : AutoLocatorComponent
     {
-        private WindowsManager _windowsManager;
+        [SerializeField] private ApplicationConfig _config;
 
-
+        private WindowsManager _windowsManager;        
 
 
         private void Start()
@@ -17,6 +19,12 @@ namespace GOALS.GlobalManagers
             _windowsManager = ComponentLocator.Resolve<WindowsManager>();
 
             ApplicationInitializing();
+        }
+
+
+        public ApplicationConfig GetConfig()
+        {
+            return _config;
         }
 
 

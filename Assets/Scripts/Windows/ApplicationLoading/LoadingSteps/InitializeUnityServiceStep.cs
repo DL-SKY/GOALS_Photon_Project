@@ -2,7 +2,6 @@
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.RemoteConfig;
-using UnityEngine;
 
 namespace GOALS.Windows.ApplicationLoading.LoadingSteps
 {
@@ -25,8 +24,6 @@ namespace GOALS.Windows.ApplicationLoading.LoadingSteps
 
         async private void DoStep()
         {
-            Debug.LogError($"01 : {Time.time}");
-
             if (Utilities.CheckForInternetConnection())
             {
                 await UnityServices.InitializeAsync();
@@ -40,8 +37,6 @@ namespace GOALS.Windows.ApplicationLoading.LoadingSteps
             {
                 Failed("Not Internet Connection");
             }
-
-            Debug.LogError($"02 : {Time.time}");
         }
     }
 }

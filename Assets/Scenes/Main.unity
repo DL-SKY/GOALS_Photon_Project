@@ -387,24 +387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f2f131e0bd79941923fa5edda652f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventOnConnectedToMaster:
-    m_PersistentCalls:
-      m_Calls: []
-  EventOnJoinedLobby:
-    m_PersistentCalls:
-      m_Calls: []
-  EventOnLeftLobby:
-    m_PersistentCalls:
-      m_Calls: []
-  EventOnCreatedRoom:
-    m_PersistentCalls:
-      m_Calls: []
-  EventOnJoinedRoom:
-    m_PersistentCalls:
-      m_Calls: []
-  EventOnLeftRoom:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &828902052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +982,7 @@ MonoBehaviour:
   _isDontDestroy: 0
   _isRegisterCurrentComponent: 1
   _component: {fileID: 0}
+  _config: {fileID: 11400000, guid: 98a97bff751f55d49bc904f2639b0284, type: 2}
 --- !u!1 &2053674727
 GameObject:
   m_ObjectHideFlags: 0
