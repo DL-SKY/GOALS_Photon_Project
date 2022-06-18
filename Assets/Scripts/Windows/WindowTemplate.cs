@@ -8,7 +8,7 @@ namespace GOALS.Windows
         public event Action OnInitialize;
         public event Action<WindowTemplate, bool> OnClose;
 
-        public static string PathPrefab = "";
+        public static string PathPrefab => "";
 
         [Header("Main Settings")]
         [SerializeField] protected bool _canUseEsc;

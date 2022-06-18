@@ -30,7 +30,6 @@ namespace GOALS.GlobalManagers
 
         private void ApplicationInitializing()
         {
-            //TODO: Path window
             _windowsManager.ShowWindow<ApplicationLoadingWindow>(ApplicationLoadingWindow.PathPrefab,
                 Windows.Enums.EnumWindowLayer.Loading, 
                 includeInWindowsList: false);

@@ -7,7 +7,7 @@ namespace GOALS.Windows.ApplicationLoading
 {
     public class ApplicationLoadingWindow : WindowTemplate
     {
-        public static new string PathPrefab = "Windows/Loading/ApplicationLoadingWindow";
+        public static new string PathPrefab => "Windows/Loading/ApplicationLoadingWindow";
 
         private const EnumLoadingStep FIRST_LOADING_STEP = EnumLoadingStep.InitializeUnityService;
         private const EnumLoadingStep LAST_LOADING_STEP = EnumLoadingStep.LastStep;
@@ -98,7 +98,7 @@ namespace GOALS.Windows.ApplicationLoading
         private void OnCompleteHandler(LoadingStepBase step)
         {
             if (CheckLastStep(step.Step))
-                ;
+                Close();
             else
                 StartLoadingStep(step.completeNextStep);
         }
@@ -106,7 +106,7 @@ namespace GOALS.Windows.ApplicationLoading
         private void OnFailedHandler(LoadingStepBase step, string error)
         {
             if (CheckLastStep(step.Step))
-                ;
+                Close();
             else
                 StartLoadingStep(step.failedNextStep);
         }
